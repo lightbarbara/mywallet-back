@@ -45,3 +45,20 @@ export async function signIn(req, res) {
     }
 
 }
+
+export async function signOut(req, res) {
+
+    const user = res.locals.user
+
+    try {
+
+        await sessionsCollection.deleteOne({ userId: user._id })
+
+        return res.status(200).send({message: 'Usuário deslogado'})
+
+    } catch (err) {
+        console.log(err)
+        return res.sendStatus(500)
+    }
+
+}

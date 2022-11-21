@@ -43,28 +43,28 @@ export async function newTransaction(req, res) {
 
 }
 
-export async function deleteTransaction(req, res) {
+// export async function deleteTransaction(req, res) {
 
-    const user = res.locals.user
+//     const user = res.locals.user
 
-    try {
+//     try {
 
-    } catch (err) {
-        console.log(err)
-        res.sendStatus(500)
-    }
+//     } catch (err) {
+//         console.log(err)
+//         res.sendStatus(500)
+//     }
 
-}
+// }
 
-export async function updateTransaction(req, res) {
+// export async function updateTransaction(req, res) {
 
-    const user = res.locals.user
+//     const user = res.locals.user
 
-    try {
+//     try {
 
-    } catch (err) {
-        console.log(err)
-        res.sendStatus(500)
-    }
+//     } catch (err) {
+//         console.log(err)
+//         res.sendStatus(500)
+//     }
 
-}
+// }
