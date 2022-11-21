@@ -1,12 +1,14 @@
 import { Router } from "express"
 import { deleteTransaction, getTransactions, newTransaction, updateTransaction } from "../controllers/transactions.controller.js"
-import { validationAuthorization } from "../middlewares/transactions.middleware.js"
+import { validationAuthorization, validationSchema } from "../middlewares/transactions.middleware.js"
 
 const router = Router()
 
 router.use(validationAuthorization)
 
 router.get('/transactions', getTransactions)
+
+router.use(validationSchema)
 
 router.post('/new-transaction', newTransaction)
 

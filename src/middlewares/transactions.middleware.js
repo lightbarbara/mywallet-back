@@ -1,9 +1,26 @@
 import { sessionsCollection, usersCollection } from "../database/db.js"
 import { transactionSchema } from "../schemas/transactions.schema.js"
 
-export async function validationAuthorization(req, res, next) {
+export async function validationSchema(req, res, next) {
 
     const validation = transactionSchema.validate(req.body, { abortEarly: false })
+
+    try {
+        if (validation.error) {
+            const errors = validation.error.details.map(detail => detail.message)
+            
+            res.status(422).send({ message: errors })
+            return
+        }
+        next()
+
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+}
+
+export async function validationAuthorization(req, res, next) {
 
     const { authorization } = req.headers
 
@@ -14,12 +31,6 @@ export async function validationAuthorization(req, res, next) {
     const token = authorization.replace('Bearer ', '')
 
     try {
-
-        if (validation.error) {
-            const errors = validation.error.details.map(detail => detail.message)
-            res.status(422).send({ message: errors })
-            return
-        }
 
         const session = await sessionsCollection.findOne({ token })
 

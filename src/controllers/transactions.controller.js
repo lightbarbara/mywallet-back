@@ -8,9 +8,6 @@ export async function getTransactions(req, res) {
     try {
 
         const transactions = await transactionsCollection.find({ userId: user._id }).toArray()
-
-        console.log(user)
-        console.log(transactions)
         
         res.status(200).send(transactions)
 
@@ -25,7 +22,7 @@ export async function newTransaction(req, res) {
 
     const user = res.locals.user
 
-    const { value, description } = req.body
+    const { value, description, type } = req.body
 
     try {
 
@@ -33,7 +30,8 @@ export async function newTransaction(req, res) {
             date: dayjs().format('DD/MM'),
             description,
             value,
-            userId: user._id
+            userId: user._id,
+            type
         })
 
         return res.status(200).send({message: 'Transação salva'})
