@@ -4,7 +4,9 @@ import bcrypt from 'bcrypt'
 
 export async function signUp(req, res) {
 
-    const { name, email, encryptedPassword } = req.user
+    const { name, email, password } = res.locals.user
+
+    const encryptedPassword = bcrypt.hashSync(password, 15)
 
     try {
 
@@ -24,7 +26,7 @@ export async function signUp(req, res) {
 
 export async function signIn(req, res) {
 
-    const user = req.user
+    const user = res.locals.user
 
     try {
 

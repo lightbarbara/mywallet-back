@@ -1,6 +1,9 @@
 import { Router } from "express"
+import { validationAuthorization } from "../middlewares/transactions.middleware"
 
 const router = Router()
+
+router.use(validationAuthorization)
 
 router.post('/new-transaction', )
 
