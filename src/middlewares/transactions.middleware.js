@@ -1,4 +1,4 @@
-import { sessionsCollection } from "../database/db"
+import { sessionsCollection, usersCollection } from "../database/db.js"
 
 export async function validationAuthorization(req, res, next) {
     const { authorization } = req.headers
@@ -11,7 +11,15 @@ export async function validationAuthorization(req, res, next) {
 
     try {
 
-        
+        const session = await sessionsCollection.findOne({ token })
+
+        if (!session) {
+            return res.sendStatus(401)
+        }
+
+        const user = await usersCollection.findOne({ _id: session.userId })
+
+        res.locals.user = user
 
         next()
 

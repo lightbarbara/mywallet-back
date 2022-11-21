@@ -30,9 +30,7 @@ export async function validationUserSignIn(req, res, next) {
         const userLoggedIn = await sessionsCollection.findOne({ userId: userExists._id })
 
         if (userLoggedIn) {
-            console.log(userLoggedIn.userId)
             await sessionsCollection.deleteOne({ userId: userLoggedIn.userId })
-            res.status(200).send({ message: 'Deslogada a sessão anterior' })
         }
 
         res.locals.user = userExists
