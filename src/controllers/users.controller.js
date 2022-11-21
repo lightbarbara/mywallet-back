@@ -37,7 +37,7 @@ export async function signIn(req, res) {
             userId: user._id
         })
 
-        return res.status(200).send({ 'token': token })
+        return res.status(200).send({ 'token': token, 'name': user.name })
 
     } catch (err) {
         console.log(err)
