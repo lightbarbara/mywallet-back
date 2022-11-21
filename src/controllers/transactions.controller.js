@@ -1,0 +1,1 @@
+import { usersCollection, sessionsCollection, transactionsCollection } from "../database/db.js";
