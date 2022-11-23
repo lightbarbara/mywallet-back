@@ -48,17 +48,13 @@ export async function newTransaction(req, res) {
 
 export async function deleteTransaction(req, res) {
 
-    const user = res.locals.user
-
     const { id } = req.params
 
     try {
 
-        // const transaction = await transactionsCollection.findOne({_id: ObjectId(id)})
+        await transactionsCollection.deleteOne({ _id: ObjectId(id) })
 
-        await transactionsCollection.deleteOne({_id: ObjectId(id)})
-
-        res.status(200).send({message: 'Transação deletada'})
+        res.status(200).send({ message: 'Transação deletada' })
 
     } catch (err) {
         console.log(err)
@@ -67,15 +63,27 @@ export async function deleteTransaction(req, res) {
 
 }
 
-// export async function updateTransaction(req, res) {
+export async function updateTransaction(req, res) {
 
-//     const user = res.locals.user
+    const { value, description, type } = req.body
 
-//     try {
+    const { id } = req.params
 
-//     } catch (err) {
-//         console.log(err)
-//         res.sendStatus(500)
-//     }
+    await transactionsCollection.updateOne({ _id: ObjectId(id) }, {
+        $set: {
+            value,
+            description,
+            type
+        }
+    })
 
-// }
+    res.status(200).send({ message: 'Transação atualizada' })
+
+    try {
+
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+
+}
