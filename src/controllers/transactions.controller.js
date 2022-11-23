@@ -22,7 +22,9 @@ export async function newTransaction(req, res) {
 
     const user = res.locals.user
 
-    const { value, description, type } = req.body
+    let { value, description, type } = req.body
+
+    value = Number(value)
 
     try {
 
