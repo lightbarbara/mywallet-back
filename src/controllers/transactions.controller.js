@@ -1,5 +1,6 @@
 import { transactionsCollection } from "../database/db.js";
 import dayjs from 'dayjs'
+import { ObjectId } from "mongodb";
 
 export async function getTransactions(req, res) {
 
@@ -8,7 +9,7 @@ export async function getTransactions(req, res) {
     try {
 
         const transactions = await transactionsCollection.find({ userId: user._id }).toArray()
-        
+
         res.status(200).send(transactions)
 
     } catch (err) {
@@ -36,7 +37,7 @@ export async function newTransaction(req, res) {
             type
         })
 
-        return res.status(200).send({message: 'Transação salva'})
+        return res.status(200).send({ message: 'Transação salva' })
 
     } catch (err) {
         console.log(err)
@@ -45,18 +46,26 @@ export async function newTransaction(req, res) {
 
 }
 
-// export async function deleteTransaction(req, res) {
+export async function deleteTransaction(req, res) {
 
-//     const user = res.locals.user
+    const user = res.locals.user
 
-//     try {
+    const { id } = req.params
 
-//     } catch (err) {
-//         console.log(err)
-//         res.sendStatus(500)
-//     }
+    try {
 
-// }
+        // const transaction = await transactionsCollection.findOne({_id: ObjectId(id)})
+
+        await transactionsCollection.deleteOne({_id: ObjectId(id)})
+
+        res.status(200).send({message: 'Transação deletada'})
+
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
+    }
+
+}
 
 // export async function updateTransaction(req, res) {
 
